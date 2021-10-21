@@ -1,0 +1,93 @@
+.product-card: {
+  width: 270p;
+  height: 365px;
+  background: #fff;
+  box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
+  border-radius: 10px;
+}
+,
+.product-view: {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  background: #fff;
+  border: 1px solid #ebebe;
+  box-sizin: border-bo;
+  border-radius: 5p;
+}
+,
+.product-number: {
+  position: absolute;
+  width: 62px;
+  height: 30px;
+  right: 0;
+  top: 0;
+
+  background: #fff;
+  border: 1px solid #ebebeb;
+  box-sizing: border-box;
+  border-radius: 0px 5px;
+}
+
+#app {
+  font-family: 'Montserrat', sans-serif;
+
+  --h00: 36px;
+  --h0: 26px;
+  --h1: 15px;
+  --h2: 14px;
+
+  --h3: 12px;
+  --h4: 11px;
+  --h5: 10px;
+  --h6: 9px;
+
+  --border-width: 1px;
+  --border-radius: 3px;
+
+  --width-1: 24px;
+  --width-2: 32px;
+  --width-3: 48px;
+  --width-4: 64px;
+
+  --z1: 1;
+  --z2: 2;
+  --z3: 3;
+  --z4: 4;
+
+  --line-height-1: 1em;
+  --line-height-2: 1.125em;
+  --line-height-3: 1.25em;
+  --line-height-4: 1.5em;
+  --caps-letter-spacing: 0.2em;
+  --bold-font-weight: bold;
+
+  --space-1: 4px;
+  --space-2: 7px;
+  --space-3: 10px;
+  --space-4: 30px;
+}
+
+.m-4 {
+  margin: calc(0 - var(--space-4));
+}
+.mt-4 {
+  margin-top: calc(0 - var(--space-4));
+}
+.mr-4 {
+  margin-right: calc(0 - var(--space-4));
+}
+.mb-4 {
+  margin-bottom: calc(0 - var(--space-4));
+}
+.ml-4 {
+  margin-left: calc(0 - var(--space-4));
+}
+.mx-4 {
+  margin-left: calc(0 - var(--space-4));
+  margin-right: calc(0 - var(--space-4));
+}
+.my-4 {
+  margin-top: calc(0 - var(--space-4));
+  margin-bottom: calc(0 - var(--space-4));
+}

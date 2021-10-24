@@ -1,17 +1,63 @@
+<script lang="ts" setup>
+
+const props = defineProps<{
+  floor: number,
+  rooms: number,
+  square: number,
+  prodNumber: string,
+  price: number,
+}>()
+
+const formatter = new Intl.NumberFormat('ru-RU')
+
+const endingOfTheRussianWordRoom = computed(() => {
+  if (props.rooms % 100 > 10 && props.rooms % 100 <= 20) {
+    return ''
+  }
+
+  const roomsLowestDigit = props.rooms % 10
+
+  switch (roomsLowestDigit) {
+    case 0:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+      return ''
+    case 1:
+      return 'а'
+    case 2:
+    case 3:
+    case 4:
+      return 'ы'
+  }
+})
+// new Intl.NumberFormat('ru-RU').format(number)
+
+const costPerMeterText = computed(() => (
+  formatter.format(Math.round(props.price / props.square))
+))
+
+const detail = () => {
+  console.log('detail')
+}
+</script>
 <template>
   <article class="prod-card p3">
     <div class="fit flex justify-between mb3 mt1">
-      <div class="dim h3 ml1 bold">3 этаж</div>
-      <h2 class="h3 my0 mr1 bold">1 комната <span class="dim mx2">-</span> 22,94м²</h2>
+      <div class="dim h3 ml1 bold">{{floor}} этаж</div>
+      <h2 class="h3 my0 mr1 bold">
+        {{rooms}} комнат{{endingOfTheRussianWordRoom}}
+        <span class="dim mx2">-</span> {{square.toFixed(2)}}м²</h2>
     </div>
     <div class="image-block relative">
-      <div class="number z1">№256</div>
+      <div class="number z1">№{{prodNumber}}</div>
       <div class="plan"></div>
     </div>
-    <div class="price">2 729 860р.</div>
-    <div class="cost-per-meter dim">119 000 р. за м²</div>
-    <button
-      class="checked h1 bold pointer detailize">Подробнее</button>
+    <div class="price">{{formatter.format(price)}}р.</div>
+    <div class="cost-per-meter dim">{{costPerMeterText}} р. за м²</div>
+    <button @click="detail"
+      class="checked h1 bold pointer detail">Подробнее</button>
   </article>
 </template>
 <style>
@@ -84,7 +130,7 @@
   margin-right: 5px;
   text-align: right;
 }
-.detailize {
+.detail {
 width: 250px;
 height: 40px;
 background: #70D24E;

@@ -32,12 +32,12 @@ onMounted(() => {
 <template>
 <div class="frame">
   <div class="envelope">
-    <div class="content" ref="content">
-      <header style="margin-bottom: 57px;">
+    <div class="content flex flex-column justify-start" ref="content">
+      <header style="margin-bottom: 34px;">
         <h1 class="mt0">Lorem ipsum dolor sit</h1>
       </header>
       <FilterPool />
-      <Showcase />
+      <ProdPull />
     </div>
   </div>
 </div>

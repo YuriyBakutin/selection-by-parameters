@@ -15,6 +15,8 @@ declare module 'vue' {
     FilterRangeWidget: typeof import('./components/FilterRangeWidget.vue')['default']
     FiltreChoiceLockingButton: typeof import('./components/FiltreChoiceLockingButton.vue')['default']
     LockingButton: typeof import('./components/LockingButton.vue')['default']
+    ProdCard: typeof import('./components/ProdCard.vue')['default']
+    ProdPull: typeof import('./components/ProdPull.vue')['default']
     RangeFilterWidget: typeof import('./components/RangeFilterWidget.vue')['default']
     Showcase: typeof import('./components/Showcase.vue')['default']
   }

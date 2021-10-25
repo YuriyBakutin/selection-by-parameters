@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const store = useStore()
+const filteredProdData = computed(() => store.getters.getFilteredProdData)
 
 const product = {
   floor: 10,
@@ -17,11 +19,13 @@ const detail = () => {
     class="fit flex flex-wrap"
     style="background-color: bisque; margin-top: 49px;">
     <ProdCard
-      :floor="product.floor"
-      :rooms="product.rooms"
-      :square="product.square"
-      :prodNumber="product.prodNumber"
-      :price="product.price"
+      v-for="prodDataItem in filteredProdData"
+      :key="'prodDataItem' + prodDataItem.building_id + prodDataItem.id"
+      :floor="prodDataItem.floor"
+      :rooms="prodDataItem.rooms"
+      :square="prodDataItem.square"
+      :prodNumber="prodDataItem.number"
+      :price="prodDataItem.price"
      />
   </nav>
 </template>

@@ -2,7 +2,7 @@
 const store = useStore()
 
 const submitFilter = () => {
-  console.log('submitFilter')
+  store.commit('connectFilters')
 }
 
 const dropFilter = () => {

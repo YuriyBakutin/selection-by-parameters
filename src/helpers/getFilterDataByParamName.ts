@@ -6,7 +6,7 @@ export default (Filter: IFilterParams, data: IProdData[]) => {
 
   if (type === FilterTypes.choice) {
     return {
-      optionsToChoice: [
+      variants: [
         ...data.reduce((a, dataItem) => a.add(dataItem[paramName]), new Set),
       ].map((variantName) => ({ variantName, checked: false })),
     }

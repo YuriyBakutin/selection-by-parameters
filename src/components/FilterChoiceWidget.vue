@@ -7,14 +7,14 @@ const props = defineProps<{
   filterName: string,
 }>()
 
-const optionsToChoiceMaxIndex = props.filterData.optionsToChoice.length - 1
+const variantsMaxIndex = props.filterData.variants.length - 1
 </script>
 <template>
   <div style="display: inline-block;">
     <LockingButton
-      v-for="variant, index in filterData.optionsToChoice"
+      v-for="variant, index in filterData.variants"
       :key="'ChoiceFilterWidget' + variant.variantName"
-      :isLast="index == optionsToChoiceMaxIndex"
+      :isLast="index == variantsMaxIndex"
       :filterName="filterName"
       :variantName="variant.variantName" />
   </div>

@@ -1,4 +1,6 @@
 import getFilterDataByParamName from '@/helpers/getFilterDataByParamName'
+import connectFilter from '@/helpers/connectFilter'
+import disconnectFilter from '@/helpers/disconnectFilter'
 
 enum FilterTypes {
   choice = 'choice',
@@ -6,7 +8,8 @@ enum FilterTypes {
 }
 
 interface IChoiceFilterData {
-  optionsToChoice: { variantName: string, checked: boolean }[]
+  variants: { variantName: string, checked: boolean }[]
+  connectedVariants?: (string | number)[]
 }
 
 interface IRangeFilterData {
@@ -18,6 +21,8 @@ interface IRangeFilterData {
   currentMaxValueText?: null | number,
   minHandlePercent?: null | number, // 0..100
   maxHandlePercent?: null | number, // 0..100
+  connectedMinValue?: null | number,
+  connectedMaxValue?: null | number,
 }
 
 interface IRangeFilterOptions {
@@ -65,12 +70,8 @@ export default createStore({
         title: 'КОМНАТЫ',
         type: FilterTypes.choice,
         data: {
-          optionsToChoice: [
-            { variantName: 'S', checked: false },
-            { variantName: '1к', checked: false },
-            { variantName: '2k', checked: false },
-            { variantName: '3к', checked: false },
-          ],
+          variants: [],
+          connectedVariants: [],
         },
       },
       {
@@ -82,6 +83,8 @@ export default createStore({
           maxValue: null,
           currentMinValue: null,
           currentMaxValue: null,
+          connectedMinValue: null,
+          connectedMaxValue: null,
         },
       },
       {
@@ -93,6 +96,8 @@ export default createStore({
           maxValue: null,
           currentMinValue: null,
           currentMaxValue: null,
+          connectedMinValue: null,
+          connectedMaxValue: null,
         },
       },
       {
@@ -104,6 +109,8 @@ export default createStore({
           maxValue: null,
           currentMinValue: null,
           currentMaxValue: null,
+          connectedMinValue: null,
+          connectedMaxValue: null,
         },
         options: {
           precision: 1,
@@ -118,18 +125,44 @@ export default createStore({
     prodData: [] as IProdData[],
   },
   getters: {
-    isFarLeft: (state: IState) => (filterParams: IFilterParams) => {
-      const index = state.filters.indexOf(filterParams)
+    getFilteredProdData: (state: IState) => {
+      return state.prodData.filter((prodDataItem) => {
+        const filters = state.filters
 
-      if (index === -1) {
-        return null
-      }
+        for (const prodDataItemKey in prodDataItem) {
+          const filter = filters.find((filter) => filter.name === prodDataItemKey)
 
-      if (index === 0) {
+          if (filter) {
+            if (filter.type === FilterTypes.choice) {
+              const filterData = filter.data as IChoiceFilterData
+
+              if (
+                filterData.connectedVariants
+                && !filterData.connectedVariants.includes(prodDataItem[prodDataItemKey])
+              ) {
+                return false
+              }
+            } else {
+              const filterData = filter.data as IRangeFilterData
+
+              if (
+                filterData.connectedMaxValue
+                && prodDataItem[prodDataItemKey] > filterData.connectedMaxValue
+              ) {
+                return false
+              }
+              if (
+                filterData.connectedMinValue
+                && prodDataItem[prodDataItemKey] < filterData.connectedMinValue
+              ) {
+                return false
+              }
+            }
+          }
+        }
+
         return true
-      }
-
-      return false
+      })
     },
     getFilterParamByName: (state: IState) => (filterName: string) => {
       return state.filters.find((param) => param.name === filterName)
@@ -146,12 +179,19 @@ export default createStore({
         return false
       }
 
-      return !!(params.data as IChoiceFilterData)?.optionsToChoice.find(
+      return !!(params.data as IChoiceFilterData)?.variants.find(
         (variant) => variant.variantName === variantName,
       )?.checked
     },
   },
   mutations: {
+    connectFilters(state: IState) {
+      for (const filter of state.filters) {
+        connectFilter(
+          filter,
+        )
+      }
+    },
     setCurrentValue(state: IState, {
       target,
       filterName,
@@ -181,6 +221,7 @@ export default createStore({
     },
     initFilters(state: IState) {
       for (const filter of state.filters) {
+        disconnectFilter(filter)
         const data = getFilterDataByParamName(
           filter,
           state.prodData,
@@ -205,7 +246,7 @@ export default createStore({
     ) {
       const variant = (state.filters.find(
         (param) => param.name === filterName,
-      )?.data as IChoiceFilterData).optionsToChoice?.find(
+      )?.data as IChoiceFilterData).variants?.find(
         (variant) => variant.variantName === variantName,
       )
 
@@ -219,12 +260,12 @@ export default createStore({
     clearProdData(state: IState) {
       state.prodData = []
     },
-    setContentBoxSizes(state: IFiltersState, contentElem: HTMLElement) {
-      const rect = contentElem.getBoundingClientRect()
-      const contentBoxLeft = rect.x
-      const contentBoxRight = rect.x + rect.width
-      state.layout = { contentBoxRight, contentBoxLeft }
-    },
+    // setContentBoxSizes(state: IFiltersState, contentElem: HTMLElement) {
+    //   const rect = contentElem.getBoundingClientRect()
+    //   const contentBoxLeft = rect.x
+    //   const contentBoxRight = rect.x + rect.width
+    //   state.layout = { contentBoxRight, contentBoxLeft }
+    // },
   },
   actions: {},
 })

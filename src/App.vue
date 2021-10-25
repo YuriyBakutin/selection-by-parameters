@@ -8,24 +8,24 @@ const content = ref(null)
 store.commit('updateProdData', getProdData())
 store.commit('initFilters')
 
-onMounted(() => {
-  store.commit('setContentBoxSizes', content.value)
-})
+// onMounted(() => {
+//   store.commit('setContentBoxSizes', content.value)
+// })
 
-const onResize = () => {
-  // const contentBoxRight = (content.value as HTMLElement | null)?.getBoundingClientRect().right
-  // const contentBoxLeft = (content.value as HTMLElement | null)?.getBoundingClientRect().left
-  store.commit('setContentBoxSizes', content.value)
-}
+// const onResize = () => {
+//   // const contentBoxRight = (content.value as HTMLElement | null)?.getBoundingClientRect().right
+//   // const contentBoxLeft = (content.value as HTMLElement | null)?.getBoundingClientRect().left
+//   store.commit('setContentBoxSizes', content.value)
+// }
 
 // const onClick = (e: MouseEvent) => {
 //   console.log('(x, y): ', e.pageX, e.pageY)
 
 // }
 
-onMounted(() => {
-  window.addEventListener('resize', onResize)
-})
+// onMounted(() => {
+//   window.addEventListener('resize', onResize)
+// })
 
 </script>
 

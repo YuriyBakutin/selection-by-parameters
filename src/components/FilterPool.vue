@@ -7,7 +7,7 @@ const filters = computed(() => (store.state.filters) as IFilterParams[])
 </script>
 <template>
   <aside
-    style="margin-bottom: 49px; padding: 0 22px;"
+    style="margin-bottom: 49px; padding: 0 32px;"
     class="flex flex-wrap justify-between items-center">
     <template :key="'FilterWithGap.' + filterParams?.name" v-for="filterParams in filters">
       <Filter :filterParams="filterParams" />

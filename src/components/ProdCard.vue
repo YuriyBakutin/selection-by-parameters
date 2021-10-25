@@ -26,7 +26,7 @@ const detail = () => {
 <template>
   <article
     style="overflow: hidden"
-    class="prod-card p3 mb4">
+    class="prod-card p3">
     <div class="fit flex justify-between mb3 mt1">
       <div class="dim h3 ml1 bold">{{floor}} этаж</div>
       <h2 class="h3 my0 mr1 bold">
@@ -50,6 +50,7 @@ const detail = () => {
   background: #fff;
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
   border-radius: 10px;
+  margin: 0 10px 30px 10px;
   overflow: hidden;
   transition: box-shadow .2s ease-in-out;
 }

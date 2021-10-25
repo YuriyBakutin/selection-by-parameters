@@ -116,12 +116,12 @@ h1 {
 ::-webkit-scrollbar-button {
   background-image:url('');
   background-repeat:no-repeat;
-  width:10px;
-  height:0px
+  width: 8px;
+  height: 0px
 }
 
 ::-webkit-scrollbar-track {
-  background-color:#f8f8f8
+  background-color: #f8f8f8
 }
 
 ::-webkit-scrollbar-thumb {
@@ -131,14 +131,14 @@ h1 {
 }
 
 ::-webkit-scrollbar-thumb:hover{
-  background-color:#2c323a7f;
+  background-color: #2c323a7f;
 }
 
 ::-webkit-resizer{
-  background-image:url('');
-  background-repeat:no-repeat;
-  width:4px;
-  height:0px
+  background-image: url('');
+  background-repeat: no-repeat;
+  width: 4px;
+  height: 0px
 }
 
 ::-webkit-scrollbar{

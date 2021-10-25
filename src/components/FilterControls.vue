@@ -5,7 +5,7 @@ const submitFilter = () => {
   store.commit('connectFilters')
 }
 
-const dropFilter = () => {
+const resetFilter = () => {
   store.commit('initFilters')
 }
 
@@ -15,8 +15,9 @@ const dropFilter = () => {
   <div style="width: 200px; height: 73px; text-align: center;">
     <button @click="submitFilter"
       class="control-frame checked h1 bold pointer submit">Применить</button>
-    <div @click="dropFilter"
-      tabindex="0" class="h5 bold pointer inline-block drop">сбросить фильтр</div>
+    <button @click="resetFilter"
+      tabindex="0"
+      class="h5 bold pointer inline-block reset">сбросить фильтр</button>
   </div>
 </template>
 <style scoped>
@@ -25,13 +26,19 @@ const dropFilter = () => {
   text-transform: uppercase;
   margin-top: 12px;
 }
-.drop {
+.reset {
+  background: none;
   text-transform: uppercase;
+  border-top: none;
+  border-right: none;
+  border-left: none;
   border-bottom: 1px solid #70d24e;
   padding: 1px; margin-top: 11px;
+  outline:0 none !important;
 }
-.drop:focus{
+.reset:focus{
   outline: none !important;
   border-bottom-width: 2px;
+  outline:0 none !important;
 }
 </style>

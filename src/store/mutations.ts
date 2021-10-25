@@ -1,6 +1,6 @@
-import getFilterDataByParamName from '@/helpers/getFilterDataByParamName'
-import connectFilter from '@/helpers/connectFilter'
-import disconnectFilter from '@/helpers/disconnectFilter'
+import getFilterDataByParamName from '@/store/helpers/getFilterDataByParamName'
+import connectFilter from '@/store/helpers/connectFilter'
+import disconnectFilter from '@/store/helpers/disconnectFilter'
 import {
   FilterTypes,
   // IRangeFilterOptions,

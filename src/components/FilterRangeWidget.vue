@@ -11,10 +11,8 @@ const props = defineProps<{
 }>()
 
 const handleRadius = 12
-let moving = false
-
 const precision = toRaw(props.filterOptions?.precision ?? 0)
-const degree = 10 ** precision
+const inputStep = 1 / (10 ** precision)
 const dataToUIMultiplier = toRaw(props.filterOptions?.multiplier ?? 1)
 
 const currentMinHandle = ref(null as SVGCircleElement | null)
@@ -27,6 +25,76 @@ const lengthX = ref(175)
 const maxX = ref(163)
 const minX = handleRadius
 const handleCenterMinDistance = handleRadius * 2
+
+const minValue = computed(() => {
+  return ((
+    store.getters.getFilterDataByName(props.filterName)
+  ).minValue as number)
+})
+
+const maxValue = computed(() => {
+  return ((
+    store.getters.getFilterDataByName(props.filterName)
+  ).maxValue as number)
+})
+
+const percentXRatio = computed(() => (
+  100 / (lengthX.value - 4 * handleRadius)
+))
+
+const ratio = computed(() => (
+  (maxValue.value - minValue.value) / (lengthX.value - 4 * handleRadius)
+))
+
+const dataToHandlerPercent = computed(() => 100 / (maxValue.value - minValue.value))
+
+const currentMinValue = computed({
+  get() {
+    const v = ((store.getters.getFilterDataByName(props.filterName)
+    ).currentMinValue as number)
+
+    return v
+  },
+  set(v: number) {
+    currentMinValueText.value = (v * dataToUIMultiplier).toFixed(precision)
+
+    // if (!moving) {
+    //   minHandlePercent.value = (v - minValue.value) * dataToHandlerPercent.value
+    //   console.log('dataToHandlerPercent.value: ', dataToHandlerPercent.value);
+    //   console.log('minValue.value: ', minValue.value);
+    //   console.log('v - minValue.value: ', v - minValue.value);
+    //   console.log('minHandlePercent.value: ', minHandlePercent.value);
+    // }
+
+    // if (!moving) {
+    //   minHandlePercent.value = (
+    //     dataToHandlerPercent.value === Infinity
+    //     ? 50
+    //     : (v - minValue.value) * dataToHandlerPercent.value
+    //   )
+    // }
+
+    store.commit('setCurrentValue', {
+      target: 'currentMinValue',
+      filterName: props.filterName,
+      value: v / dataToUIMultiplier,
+    })
+  },
+})
+
+const currentMinValueText = computed({
+  get() {
+    return (store.getters.getFilterDataByName(props.filterName)
+    ).currentMinValueText
+  },
+  set(vs: string) {
+    store.commit('setCurrentValue', {
+      target: 'currentMinValueText',
+      filterName: props.filterName,
+      value: vs,
+    })
+  },
+})
 
 const minHandlePercent = computed({
   get() {
@@ -55,107 +123,20 @@ const currentMinX = computed({
   },
 })
 
-const currentMaxX = computed({
-  get() {
-    const vx = maxX.value - (100 - maxHandlePercent.value) / percentXRatio.value
-    return vx
-  },
-  set(vx: number) {
-    store.commit('setCurrentValue', {
-      target: 'maxHandlePercent',
-      filterName: props.filterName,
-      value: 100 -(maxX.value - vx) * percentXRatio.value,
-    })
-  },
-})
-
-const maxHandlePercent = computed({
-  get() {
-    return (store.getters.getFilterDataByName(props.filterName)
-    ).maxHandlePercent
-  },
-  set(v: number) {
-    store.commit('setCurrentValue', {
-      target: 'maxHandlePercent',
-      filterName: props.filterName,
-      value: v,
-    })
-  },
-})
-
-const percentXRatio = computed(() => (
-  100 / (lengthX.value - 4 * handleRadius)
-))
-
-const ratio = computed(() => (
-  (maxValue.value - minValue.value) / (lengthX.value - 4 * handleRadius)
-))
-
-let shiftX: number
-let oldHandleX: number
-let movingHandleName: string
-
-const minValue = computed(() => {
-  return ((
-    store.getters.getFilterDataByName(props.filterName)
-  ).minValue as number)
-})
-
-const maxValue = computed(() => {
-  return ((
-    store.getters.getFilterDataByName(props.filterName)
-  ).maxValue as number)
-})
-
-const currentMinValue = computed({
-  get() {
-    const v = ((store.getters.getFilterDataByName(props.filterName)
-    ).currentMinValue as number)
-
-    // if (!moving) {
-    //   currentMinX.value = ((v - minValue.value) / ratio.value) + minX
-    // }
-
-    return v
-  },
-  set(v: number) {
-    currentMinValueText.value = (v * dataToUIMultiplier).toFixed(precision)
-
-    store.commit('setCurrentValue', {
-      target: 'currentMinValue',
-      filterName: props.filterName,
-      value: v / dataToUIMultiplier,
-    })
-  },
-})
-
-const currentMinValueText = computed({
-  get() {
-    return (store.getters.getFilterDataByName(props.filterName)
-    ).currentMinValueText
-  },
-  set(vs: string) {
-    store.commit('setCurrentValue', {
-      target: 'currentMinValueText',
-      filterName: props.filterName,
-      value: vs,
-    })
-  },
-})
-
 const currentMaxValue = computed({
   get() {
     const v = ((store.getters.getFilterDataByName(props.filterName)
     ).currentMaxValue as number)
 
-    // if (!moving) {
-    //   currentMaxX.value = maxX.value - ((maxValue.value - v) / ratio.value)
-    // }
-
     return v
   },
   set(v: number) {
     currentMaxValueText.value = (v * dataToUIMultiplier).toFixed(precision)
+
+    // if (!moving) {
+    //   maxHandlePercent.value = (v - minValue.value) * dataToHandlerPercent.value
+    //   console.log('maxHandlePercent.value: ', maxHandlePercent.value)
+    // }
 
     store.commit('setCurrentValue', {
       target: 'currentMaxValue',
@@ -178,6 +159,39 @@ const currentMaxValueText = computed({
     })
   },
 })
+
+const maxHandlePercent = computed({
+  get() {
+    return (store.getters.getFilterDataByName(props.filterName)
+    ).maxHandlePercent
+  },
+  set(v: number) {
+    store.commit('setCurrentValue', {
+      target: 'maxHandlePercent',
+      filterName: props.filterName,
+      value: v,
+    })
+  },
+})
+
+const currentMaxX = computed({
+  get() {
+    const vx = maxX.value - (100 - maxHandlePercent.value) / percentXRatio.value
+    return vx
+  },
+  set(vx: number) {
+    store.commit('setCurrentValue', {
+      target: 'maxHandlePercent',
+      filterName: props.filterName,
+      value: 100 -(maxX.value - vx) * percentXRatio.value,
+    })
+  },
+})
+
+let shiftX: number
+let oldHandleX: number
+let movingHandleName: string
+let moving: boolean
 
 const handleDrag = (event: MouseEvent) => {
   moving = true
@@ -234,29 +248,25 @@ const minInputEscape = () => {
 }
 
 const validateMin = () => {
-  console.log('currentMinValueText.value: ', currentMinValueText.value)
   if (isNaN(currentMinValueText.value as any)) {
-    console.log('isNaN')
     minInputEscape()
 
     return
   }
 
-  let v: number = +currentMinValueText.value
-  console.log('currentMinValueText.value: ', currentMinValueText.value);
-  console.log('currentMaxValue.value: ', currentMaxValue.value);
-  console.log('minValue.value: ', minValue.value);
+  let vt: number = +currentMinValueText.value
 
-  if (v > currentMaxValue.value) {
-    v = currentMaxValue.value
+  if (vt > currentMaxValue.value * dataToUIMultiplier) {
+    vt = currentMaxValue.value * dataToUIMultiplier
   }
 
-  if (v < minValue.value) {
-    v = minValue.value
+  if (vt < minValue.value * dataToUIMultiplier) {
+    vt = minValue.value * dataToUIMultiplier
   }
 
-  currentMinValue.value = v
-  currentMinValueText.value = (currentMinValue.value * dataToUIMultiplier).toFixed(precision)
+  currentMinValue.value = vt / dataToUIMultiplier
+  currentMinValueText.value = vt.toFixed(precision)
+  minHandlePercent.value = (vt / dataToUIMultiplier - minValue.value) * dataToHandlerPercent.value
 }
 
 const maxInputEscape = () => {
@@ -270,18 +280,19 @@ const validateMax = () => {
     return
   }
 
-  let v: number = +currentMaxValueText.value
+  let vt: number = +currentMaxValueText.value
 
-  if (v < currentMinValue.value) {
-    v = currentMinValue.value
+  if (vt < currentMinValue.value * dataToUIMultiplier) {
+    vt = currentMinValue.value * dataToUIMultiplier
   }
 
-  if (v > maxValue.value) {
-    v = maxValue.value
+  if (vt > maxValue.value * dataToUIMultiplier) {
+    vt = maxValue.value * dataToUIMultiplier
   }
 
-  currentMaxValue.value = v
-  currentMaxValueText.value = (currentMaxValue.value * dataToUIMultiplier).toFixed(precision)
+  currentMaxValue.value = vt / dataToUIMultiplier
+  currentMaxValueText.value = vt.toFixed(precision)
+  maxHandlePercent.value = (vt / dataToUIMultiplier - minValue.value) * dataToHandlerPercent.value
 }
 
 const setXSizes = () => {
@@ -305,7 +316,7 @@ onMounted(() => {
         class="control-frame range-input h0"
         style="text-align: center; line-height: 40px;"
         v-model="currentMinValueText"
-        :step="1/degree"
+        :step="inputStep"
         @click="selectInput"
         @keydown.up="validateMin"
         @keydown.down="validateMin"
@@ -322,7 +333,7 @@ onMounted(() => {
         class="control-frame range-input h0"
         style="text-align: center; line-height: 40px;"
         v-model="currentMaxValueText"
-        :step="1/degree"
+        :step="inputStep"
         @click="selectInput"
         @keydown.up="validateMax"
         @keydown.down="validateMax"

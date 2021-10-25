@@ -3,36 +3,16 @@ import getProdData from '@/helpers/getProdData'
 
 const store = useStore()
 const prodData = computed(() => store.state.prodData)
-const content = ref(null)
 
 store.commit('updateProdData', getProdData())
 store.commit('initFilters')
-
-// onMounted(() => {
-//   store.commit('setContentBoxSizes', content.value)
-// })
-
-// const onResize = () => {
-//   // const contentBoxRight = (content.value as HTMLElement | null)?.getBoundingClientRect().right
-//   // const contentBoxLeft = (content.value as HTMLElement | null)?.getBoundingClientRect().left
-//   store.commit('setContentBoxSizes', content.value)
-// }
-
-// const onClick = (e: MouseEvent) => {
-//   console.log('(x, y): ', e.pageX, e.pageY)
-
-// }
-
-// onMounted(() => {
-//   window.addEventListener('resize', onResize)
-// })
 
 </script>
 
 <template>
 <div class="frame">
   <div class="envelope">
-    <div class="content flex flex-column justify-start" ref="content">
+    <div class="content flex flex-column justify-start">
       <header style="margin-bottom: 34px;">
         <h1 class="mt0">Lorem ipsum dolor sit</h1>
       </header>

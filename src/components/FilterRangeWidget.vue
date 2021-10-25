@@ -98,28 +98,28 @@ let movingHandleName: string
 const minValue = computed(() => {
   return ((
     store.getters.getFilterDataByName(props.filterName)
-  ).minValue as number) * dataToUIMultiplier
+  ).minValue as number)
 })
 
 const maxValue = computed(() => {
   return ((
     store.getters.getFilterDataByName(props.filterName)
-  ).maxValue as number) * dataToUIMultiplier
+  ).maxValue as number)
 })
 
 const currentMinValue = computed({
   get() {
     const v = ((store.getters.getFilterDataByName(props.filterName)
-    ).currentMinValue as number) * dataToUIMultiplier
+    ).currentMinValue as number)
 
-    if (!moving) {
-      currentMinX.value = ((v - minValue.value) / ratio.value) + minX
-    }
+    // if (!moving) {
+    //   currentMinX.value = ((v - minValue.value) / ratio.value) + minX
+    // }
 
     return v
   },
   set(v: number) {
-    currentMinValueText.value = v.toFixed(precision)
+    currentMinValueText.value = (v * dataToUIMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMinValue',
@@ -146,16 +146,16 @@ const currentMinValueText = computed({
 const currentMaxValue = computed({
   get() {
     const v = ((store.getters.getFilterDataByName(props.filterName)
-    ).currentMaxValue as number) * dataToUIMultiplier
+    ).currentMaxValue as number)
 
-    if (!moving) {
-      currentMaxX.value = maxX.value - ((maxValue.value - v) / ratio.value)
-    }
+    // if (!moving) {
+    //   currentMaxX.value = maxX.value - ((maxValue.value - v) / ratio.value)
+    // }
 
     return v
   },
   set(v: number) {
-    currentMaxValueText.value = v.toFixed(precision)
+    currentMaxValueText.value = (v * dataToUIMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMaxValue',
@@ -211,7 +211,18 @@ const currentMinHandleDrop = (event: MouseEvent) => {
   window.removeEventListener('mousemove', currentMinHandleMove)
   window.removeEventListener('mouseup', currentMinHandleDrop)
   moving = false
+    // if (!moving) {
+    //   currentMinX.value = ((v - minValue.value) / ratio.value) + minX
+    // }currentMaxValueText
   currentMinHandleMove(event)
+
+  currentMinX.value = ((
+    +currentMinValueText.value / dataToUIMultiplier - minValue.value
+  ) / ratio.value) + minX
+
+  currentMaxX.value = maxX.value - ((
+    maxValue.value - +currentMaxValueText.value / dataToUIMultiplier
+  ) / ratio.value)
 }
 
 const selectInput = (event: MouseEvent) => {
@@ -219,7 +230,7 @@ const selectInput = (event: MouseEvent) => {
 }
 
 const minInputEscape = () => {
-  currentMinValueText.value = currentMinValue.value.toFixed(precision)
+  currentMinValueText.value = (currentMinValue.value * dataToUIMultiplier).toFixed(precision)
 }
 
 const validateMin = () => {
@@ -245,11 +256,11 @@ const validateMin = () => {
   }
 
   currentMinValue.value = v
-  currentMinValueText.value = currentMinValue.value.toFixed(precision)
+  currentMinValueText.value = (currentMinValue.value * dataToUIMultiplier).toFixed(precision)
 }
 
 const maxInputEscape = () => {
-  currentMaxValueText.value = currentMaxValue.value.toFixed(precision)
+  currentMaxValueText.value = (currentMaxValue.value * dataToUIMultiplier).toFixed(precision)
 }
 
 const validateMax = () => {
@@ -270,7 +281,7 @@ const validateMax = () => {
   }
 
   currentMaxValue.value = v
-  currentMaxValueText.value = currentMaxValue.value.toFixed(precision)
+  currentMaxValueText.value = (currentMaxValue.value * dataToUIMultiplier).toFixed(precision)
 }
 
 const setXSizes = () => {

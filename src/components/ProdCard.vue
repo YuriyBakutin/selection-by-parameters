@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import getEndingOfTheRussianWordRoom from '../helpers/getEndingOfTheRussianWordRoom'
 
 const props = defineProps<{
   floor: number,
@@ -10,29 +11,9 @@ const props = defineProps<{
 
 const formatter = new Intl.NumberFormat('ru-RU')
 
-const endingOfTheRussianWordRoom = computed(() => {
-  if (props.rooms % 100 > 10 && props.rooms % 100 <= 20) {
-    return ''
-  }
-
-  const roomsLowestDigit = props.rooms % 10
-
-  switch (roomsLowestDigit) {
-    case 0:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-      return ''
-    case 1:
-      return 'а'
-    case 2:
-    case 3:
-    case 4:
-      return 'ы'
-  }
-})
-// new Intl.NumberFormat('ru-RU').format(number)
+const endingOfTheRussianWordRoom = computed(
+  () => getEndingOfTheRussianWordRoom(props.rooms),
+)
 
 const costPerMeterText = computed(() => (
   formatter.format(Math.round(props.price / props.square))
@@ -43,7 +24,9 @@ const detail = () => {
 }
 </script>
 <template>
-  <article class="prod-card p3">
+  <article
+    style="overflow: hidden"
+    class="prod-card p3 mb4">
     <div class="fit flex justify-between mb3 mt1">
       <div class="dim h3 ml1 bold">{{floor}} этаж</div>
       <h2 class="h3 my0 mr1 bold">

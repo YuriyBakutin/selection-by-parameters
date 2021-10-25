@@ -69,7 +69,7 @@ store.commit('initFilters')
   padding: 36px 20px 30px 20px;
 }
 .content {
-  width: 1170px;
+  width: 1216px;
 }
 body {
   background-color: #2f2e2d;

@@ -12,7 +12,7 @@ const props = defineProps<{
 const handleRadius = 12
 const precision = toRaw(props.filterOptions?.precision ?? 0)
 const inputStep = 1 / (10 ** precision)
-const dataToUIMultiplier = toRaw(props.filterOptions?.multiplier ?? 1)
+const dataToTextMultiplier = toRaw(props.filterOptions?.multiplier ?? 1)
 
 const currentMinHandle = ref(null as SVGCircleElement | null)
 const currentMaxHandle = ref(null as SVGCircleElement | null)
@@ -55,7 +55,7 @@ const currentMinValue = computed({
     return v
   },
   set(v: number) {
-    currentMinValueText.value = (v * dataToUIMultiplier).toFixed(precision)
+    currentMinValueText.value = (v * dataToTextMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMinValue',
@@ -114,7 +114,7 @@ const currentMaxValue = computed({
     return v
   },
   set(v: number) {
-    currentMaxValueText.value = (v * dataToUIMultiplier).toFixed(precision)
+    currentMaxValueText.value = (v * dataToTextMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMaxValue',
@@ -209,11 +209,11 @@ const currentMinHandleDrop = (event: MouseEvent) => {
   currentMinHandleMove(event)
 
   currentMinX.value = ((
-    +currentMinValueText.value / dataToUIMultiplier - minValue.value
+    +currentMinValueText.value / dataToTextMultiplier - minValue.value
   ) / ratio.value) + minX
 
   currentMaxX.value = maxX.value - ((
-    maxValue.value - +currentMaxValueText.value / dataToUIMultiplier
+    maxValue.value - +currentMaxValueText.value / dataToTextMultiplier
   ) / ratio.value)
 }
 
@@ -222,7 +222,7 @@ const selectInput = (event: MouseEvent) => {
 }
 
 const minInputEscape = () => {
-  currentMinValueText.value = (currentMinValue.value * dataToUIMultiplier).toFixed(precision)
+  currentMinValueText.value = (currentMinValue.value * dataToTextMultiplier).toFixed(precision)
 }
 
 const validateMin = () => {
@@ -234,21 +234,21 @@ const validateMin = () => {
 
   let vt: number = +currentMinValueText.value
 
-  if (vt > currentMaxValue.value * dataToUIMultiplier) {
-    vt = currentMaxValue.value * dataToUIMultiplier
+  if (vt > currentMaxValue.value * dataToTextMultiplier) {
+    vt = currentMaxValue.value * dataToTextMultiplier
   }
 
-  if (vt < minValue.value * dataToUIMultiplier) {
-    vt = minValue.value * dataToUIMultiplier
+  if (vt < minValue.value * dataToTextMultiplier) {
+    vt = minValue.value * dataToTextMultiplier
   }
 
-  currentMinValue.value = vt / dataToUIMultiplier
+  currentMinValue.value = vt / dataToTextMultiplier
   currentMinValueText.value = vt.toFixed(precision)
-  minHandlePercent.value = (vt / dataToUIMultiplier - minValue.value) * dataToHandlerPercent.value
+  minHandlePercent.value = (vt / dataToTextMultiplier - minValue.value) * dataToHandlerPercent.value
 }
 
 const maxInputEscape = () => {
-  currentMaxValueText.value = (currentMaxValue.value * dataToUIMultiplier).toFixed(precision)
+  currentMaxValueText.value = (currentMaxValue.value * dataToTextMultiplier).toFixed(precision)
 }
 
 const validateMax = () => {
@@ -260,17 +260,17 @@ const validateMax = () => {
 
   let vt: number = +currentMaxValueText.value
 
-  if (vt < currentMinValue.value * dataToUIMultiplier) {
-    vt = currentMinValue.value * dataToUIMultiplier
+  if (vt < currentMinValue.value * dataToTextMultiplier) {
+    vt = currentMinValue.value * dataToTextMultiplier
   }
 
-  if (vt > maxValue.value * dataToUIMultiplier) {
-    vt = maxValue.value * dataToUIMultiplier
+  if (vt > maxValue.value * dataToTextMultiplier) {
+    vt = maxValue.value * dataToTextMultiplier
   }
 
-  currentMaxValue.value = vt / dataToUIMultiplier
+  currentMaxValue.value = vt / dataToTextMultiplier
   currentMaxValueText.value = vt.toFixed(precision)
-  maxHandlePercent.value = (vt / dataToUIMultiplier - minValue.value) * dataToHandlerPercent.value
+  maxHandlePercent.value = (vt / dataToTextMultiplier - minValue.value) * dataToHandlerPercent.value
 }
 
 const setXSizes = () => {

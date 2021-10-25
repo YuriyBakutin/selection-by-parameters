@@ -1,4 +1,4 @@
-import { FilterTypes, IFilterParams, IRangeFilterData, IChoiceFilterData, } from '@/store'
+import { FilterTypes, IFilterParams, IRangeFilterData, IChoiceFilterData, } from '@/store/types'
 
 export default (filter: IFilterParams) => {
   const type = filter.type

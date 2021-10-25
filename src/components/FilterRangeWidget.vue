@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IRangeFilterData, IRangeFilterOptions, } from '@/store'
+import { IRangeFilterData, IRangeFilterOptions, } from '@/store/types'
 import mitt, { Emitter, } from 'mitt'
 
 const store = useStore()

@@ -172,7 +172,7 @@ export default createStore({
     },
     getFilterVariantChecked: (state: IState, getters) => (
       filterName: string,
-      variantName: string,
+      variantName: string
     ) => {
       const params = getters.getFilterParamByName(filterName)
       if (!params) {
@@ -180,7 +180,7 @@ export default createStore({
       }
 
       return !!(params.data as IChoiceFilterData)?.variants.find(
-        (variant) => variant.variantName === variantName,
+        (variant) => variant.variantName === variantName
       )?.checked
     },
   },
@@ -188,7 +188,7 @@ export default createStore({
     connectFilters(state: IState) {
       for (const filter of state.filters) {
         connectFilter(
-          filter,
+          filter
         )
       }
     },
@@ -224,7 +224,7 @@ export default createStore({
         disconnectFilter(filter)
         const data = getFilterDataByParamName(
           filter,
-          state.prodData,
+          state.prodData
         ) as IChoiceFilterData | IRangeFilterData
 
         if (data) {
@@ -242,12 +242,12 @@ export default createStore({
         filterName: string,
         variantName: string,
         checked: boolean,
-      },
+      }
     ) {
       const variant = (state.filters.find(
-        (param) => param.name === filterName,
+        (param) => param.name === filterName
       )?.data as IChoiceFilterData).variants?.find(
-        (variant) => variant.variantName === variantName,
+        (variant) => variant.variantName === variantName
       )
 
       if (variant) {
@@ -255,7 +255,7 @@ export default createStore({
       }
     },
     updateProdData(state: IState, prodData: IProdData[]) {
-      state.prodData = [...state.prodData, ...prodData]
+      state.prodData = [...state.prodData, ...prodData,]
     },
     clearProdData(state: IState) {
       state.prodData = []
@@ -270,4 +270,4 @@ export default createStore({
   actions: {},
 })
 
-export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilterParams, ILayout, IProdData, IState }
+export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilterParams, ILayout, IProdData, IState, }

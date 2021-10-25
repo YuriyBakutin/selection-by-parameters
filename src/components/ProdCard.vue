@@ -12,7 +12,7 @@ const props = defineProps<{
 const formatter = new Intl.NumberFormat('ru-RU')
 
 const endingOfTheRussianWordRoom = computed(
-  () => getEndingOfTheRussianWordRoom(props.rooms),
+  () => getEndingOfTheRussianWordRoom(props.rooms)
 )
 
 const costPerMeterText = computed(() => (

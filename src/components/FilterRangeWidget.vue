@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { IRangeFilterData, IRangeFilterOptions } from '@/store'
-import mitt, { Emitter } from 'mitt'
+import { IRangeFilterData, IRangeFilterOptions, } from '@/store'
+import mitt, { Emitter, } from 'mitt'
 
 const store = useStore()
 
@@ -193,14 +193,14 @@ const currentMinHandleMove = (event: MouseEvent) => {
   if (movingHandleName === 'currentMinHandle') {
     currentMinX.value = Math.min(
       Math.max(event.x - shiftX + oldHandleX, minX),
-      currentMaxX.value - handleCenterMinDistance,
+      currentMaxX.value - handleCenterMinDistance
     )
 
     currentMinValue.value = minValue.value + (currentMinX.value - minX) * ratio.value
   } else if (movingHandleName === 'currentMaxHandle') {
     currentMaxX.value = Math.max(
       Math.min(event.x - shiftX + oldHandleX, maxX.value),
-      currentMinX.value + handleCenterMinDistance,
+      currentMinX.value + handleCenterMinDistance
     )
 
     currentMaxValue.value = maxValue.value - (maxX.value - currentMaxX.value) * ratio.value

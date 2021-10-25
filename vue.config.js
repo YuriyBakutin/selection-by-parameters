@@ -6,10 +6,10 @@ module.exports = {
     plugins: [
       Components({
         dts: './src/components.d.ts',
-        dirs: ['./src/components'],
+        dirs: ['./src/components',],
       }),
       AutoImport({
-        imports: ['vue', 'vuex'],
+        imports: ['vue', 'vuex',],
         dts: './src/auto-imports.d.ts',
       }),
     ],

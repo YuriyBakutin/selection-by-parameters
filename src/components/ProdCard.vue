@@ -55,7 +55,10 @@ const detail = () => {
   overflow: hidden;
   transition: box-shadow .2s ease-in-out;
 }
-.prod-card:hover,.prod-card:focus-within {
+.prod-card:hover {
+  box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
+}
+.prod-card:focus-within {
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
 }
 .dim {
@@ -69,7 +72,10 @@ const detail = () => {
   border-radius: 5px;
   transition: height .2s ease-in-out;
 }
-.prod-card:hover,.prod-card:focus-within .image-block {
+.prod-card:hover .image-block {
+  height: 200px;
+}
+.prod-card:focus-within .image-block {
   height: 200px;
 }
 .number {
@@ -96,7 +102,10 @@ const detail = () => {
   background-position: center center;
   transition: transform .2s ease-in-out;
 }
-.prod-card:hover,.prod-card:focus-within .plan {
+.prod-card:focus-within .plan {
+  transform: translate3d(0px, -22px, 0px) scale(0.8);
+}
+.prod-card:hover .plan {
   transform: translate3d(0px, -22px, 0px) scale(0.8);
 }
 .price {

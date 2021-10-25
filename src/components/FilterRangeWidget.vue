@@ -57,26 +57,10 @@ const currentMinValue = computed({
   set(v: number) {
     currentMinValueText.value = (v * dataToUIMultiplier).toFixed(precision)
 
-    // if (!moving) {
-    //   minHandlePercent.value = (v - minValue.value) * dataToHandlerPercent.value
-    //   console.log('dataToHandlerPercent.value: ', dataToHandlerPercent.value);
-    //   console.log('minValue.value: ', minValue.value);
-    //   console.log('v - minValue.value: ', v - minValue.value);
-    //   console.log('minHandlePercent.value: ', minHandlePercent.value);
-    // }
-
-    // if (!moving) {
-    //   minHandlePercent.value = (
-    //     dataToHandlerPercent.value === Infinity
-    //     ? 50
-    //     : (v - minValue.value) * dataToHandlerPercent.value
-    //   )
-    // }
-
     store.commit('setCurrentValue', {
       target: 'currentMinValue',
       filterName: props.filterName,
-      value: v / dataToUIMultiplier,
+      value: v,
     })
   },
 })
@@ -132,15 +116,10 @@ const currentMaxValue = computed({
   set(v: number) {
     currentMaxValueText.value = (v * dataToUIMultiplier).toFixed(precision)
 
-    // if (!moving) {
-    //   maxHandlePercent.value = (v - minValue.value) * dataToHandlerPercent.value
-    //   console.log('maxHandlePercent.value: ', maxHandlePercent.value)
-    // }
-
     store.commit('setCurrentValue', {
       target: 'currentMaxValue',
       filterName: props.filterName,
-      value: v / dataToUIMultiplier,
+      value: v,
     })
   },
 })

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IFilterParams, } from '@/store'
+import { IFilterParams, } from '@/store/types'
 import getFilterWidgetByType from '@/helpers/getFilterWidgetByType'
 import FilterGap from '@/components/FilterGap.vue'
 

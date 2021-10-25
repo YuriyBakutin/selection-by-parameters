@@ -40,7 +40,8 @@ const detail = () => {
     <div class="price">{{formatter.format(price)}}р.</div>
     <div class="cost-per-meter dim">{{costPerMeterText}} р. за м²</div>
     <button @click="detail"
-      class="checked h1 bold pointer detail">Подробнее</button>
+      tabindex="0"
+      class="control-frame checked h1 bold pointer detail">Подробнее</button>
   </article>
 </template>
 <style>
@@ -54,7 +55,7 @@ const detail = () => {
   overflow: hidden;
   transition: box-shadow .2s ease-in-out;
 }
-.prod-card:hover {
+.prod-card:hover,.prod-card:focus-within {
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
 }
 .dim {
@@ -68,7 +69,7 @@ const detail = () => {
   border-radius: 5px;
   transition: height .2s ease-in-out;
 }
-.prod-card:hover .image-block {
+.prod-card:hover,.prod-card:focus-within .image-block {
   height: 200px;
 }
 .number {
@@ -95,7 +96,7 @@ const detail = () => {
   background-position: center center;
   transition: transform .2s ease-in-out;
 }
-.prod-card:hover .plan {
+.prod-card:hover,.prod-card:focus-within .plan {
   transform: translate3d(0px, -22px, 0px) scale(0.8);
 }
 .price {
@@ -115,11 +116,11 @@ const detail = () => {
   text-align: right;
 }
 .detail {
-width: 250px;
-height: 40px;
-background: #70D24E;
-border-radius: 2px 2px 5px 5px !important;
-text-transform: uppercase;
-margin-top: 17px;
+  width: 250px;
+  height: 40px;
+  background: #70D24E;
+  border-radius: 2px 2px 5px 5px !important;
+  text-transform: uppercase;
+  margin-top: 17px;
 }
 </style>

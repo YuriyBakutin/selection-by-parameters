@@ -2,13 +2,15 @@
 const store = useStore()
 const filteredProdData = computed(() => store.getters.getFilteredProdData)
 
-const product = {
-  floor: 10,
-  rooms: 1,
-  square: 23.66,
-  prodNumber: '163',
-  price: 2956317,
-}
+const prodCardsPerRow = 4
+
+const prodCardEmptyArray = computed(() => {
+  const prodCardEmptyNumber = (
+    prodCardsPerRow - filteredProdData.value.length % prodCardsPerRow
+  ) % prodCardsPerRow
+
+  return new Array(prodCardEmptyNumber)
+})
 
 const detail = () => {
   console.log('detail')
@@ -25,7 +27,9 @@ const detail = () => {
       :rooms="prodDataItem.rooms"
       :square="prodDataItem.square"
       :prodNumber="prodDataItem.number"
-      :price="prodDataItem.price"
-     />
+      :price="prodDataItem.price" />
+    <ProdCardEmpty
+      v-for="item, index in prodCardEmptyArray"
+      :key="'ProdCardEmpty' + index" />
   </nav>
 </template>

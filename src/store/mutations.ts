@@ -6,6 +6,7 @@ import {
   // IRangeFilterOptions,
   IChoiceFilterData,
   IRangeFilterData,
+  IFilterLayout,
   // IFilter,
   // ILayout,
   IProdData,
@@ -13,10 +14,27 @@ import {
 } from './types'
 
 export default {
+  setFilterLayout(state: IState, {
+    filterName,
+    layout,
+  }: {
+    filterName: string,
+    layout: IFilterLayout,
+  }) {
+    const filter = state.filters.find((param) => param.name === filterName)
+    if (filter) {
+      filter.layout = layout
+    }
+  },
+  setContentLayout(state: IState, contentElem: HTMLElement) {
+    const rect = contentElem.getBoundingClientRect()
+    const contentBoxWidth = rect.width
+    state.layout = { contentBoxWidth }
+  },
   connectFilters(state: IState) {
     for (const filter of state.filters) {
       connectFilter(
-        filter,
+        filter
       )
     }
   },
@@ -52,7 +70,7 @@ export default {
       disconnectFilter(filter)
       const data = getFilterDataByParamName(
         filter,
-        state.prodData,
+        state.prodData
       ) as IChoiceFilterData | IRangeFilterData
 
       if (data) {
@@ -70,12 +88,12 @@ export default {
       filterName: string,
       variantName: string,
       checked: boolean,
-    },
+    }
   ) {
     const variant = (state.filters.find(
-      (param) => param.name === filterName,
+      (param) => param.name === filterName
     )?.data as IChoiceFilterData).variants?.find(
-      (variant) => variant.variantName === variantName,
+      (variant) => variant.variantName === variantName
     )
 
     if (variant) {

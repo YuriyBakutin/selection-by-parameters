@@ -7,7 +7,6 @@ import {
   IChoiceFilterData,
   IRangeFilterData,
   // IFilter,
-  // ILayout,
   IProdData,
   IState,
 } from './types'

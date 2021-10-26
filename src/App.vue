@@ -7,12 +7,22 @@ const prodData = computed(() => store.state.prodData)
 store.commit('updateProdData', getProdData())
 store.commit('initFilters')
 
-</script>
+const content = ref(null as HTMLElement | null)
 
+const setContentLayout = () => {
+  const contentElem = content.value as HTMLElement
+  store.commit('setContentLayout', contentElem)
+}
+
+onMounted(() => {
+  window.addEventListener('resize', setContentLayout)
+  setContentLayout()
+})
+</script>
 <template>
   <div class="frame">
     <div class="envelope">
-      <div class="content flex flex-column justify-start">
+      <div ref="content" class="content flex flex-column justify-start">
         <header style="margin-bottom: 34px;">
           <h1 class="mt0">Lorem ipsum dolor sit</h1>
         </header>

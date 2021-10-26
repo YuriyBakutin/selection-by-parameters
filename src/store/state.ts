@@ -4,7 +4,6 @@ import {
   // IChoiceFilterData,
   // IRangeFilterData,
   IFilter,
-  ILayout,
   IProdData,
   // IState,
 } from './types'
@@ -64,9 +63,5 @@ export default {
       },
     },
   ] as IFilter[],
-  layout: {
-    contentBoxRight: null,
-    contentBoxLeft: null,
-  } as ILayout,
   prodData: [] as IProdData[],
 }

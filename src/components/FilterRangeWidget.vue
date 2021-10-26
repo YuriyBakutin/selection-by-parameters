@@ -185,14 +185,14 @@ const currentMinHandleMove = (event: MouseEvent) => {
   if (movingHandleName === 'currentMinHandle') {
     currentMinX.value = Math.min(
       Math.max(event.x - shiftX + oldHandleX, minX),
-      currentMaxX.value - handleCenterMinDistance,
+      currentMaxX.value - handleCenterMinDistance
     )
 
     currentMinValue.value = minValue.value + (currentMinX.value - minX) * xValueToData.value
   } else if (movingHandleName === 'currentMaxHandle') {
     currentMaxX.value = Math.max(
       Math.min(event.x - shiftX + oldHandleX, maxX.value),
-      currentMinX.value + handleCenterMinDistance,
+      currentMinX.value + handleCenterMinDistance
     )
 
     currentMaxValue.value = maxValue.value - (
@@ -286,6 +286,9 @@ const setXSizes = () => {
   lengthX.value = +(box.value as HTMLElement).clientWidth
   maxX.value = lengthX.value - handleRadius
   currentMaxX.value = maxX.value
+
+  const layout = { width: lengthX.value }
+  store.commit('setFilterLayout', { filterName: props.filterName, layout })
 }
 
 onMounted(() => {

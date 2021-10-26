@@ -25,6 +25,7 @@ const checked = computed({
 const toggleChecked = () => {
   checked.value = !checked.value
 }
+
 </script>
 <template>
   <button

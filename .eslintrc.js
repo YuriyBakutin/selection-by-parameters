@@ -21,7 +21,7 @@ module.exports = {
       objects: 'always-multiline',
       imports: 'always-multiline',
       exports: 'always-multiline',
-      functions: 'always-multiline',
+      functions: 'never',
     }],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-interface': 'off',

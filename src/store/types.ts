@@ -26,22 +26,23 @@ interface IRangeFilterOptions {
   multiplier?: null | number,
 }
 
+interface IFilterLayout {
+  width: number
+}
+
 interface IFilter {
   name: string,
   title: string,
   type: FilterTypes,
   data: IChoiceFilterData | IRangeFilterData,
   options?: IRangeFilterOptions,
+  layout?: IFilterLayout,
 }
 
-interface ILayout {
-  contentBoxRight: number | null | undefined,
-  contentBoxLeft: number | null | undefined,
-}
-
-interface IFiltersState {
-  filters: IFilter[],
-  layout: ILayout
+interface IContentLayout {
+  contentBoxWidth: number | null | undefined,
+  contentBoxRight?: number | null | undefined,
+  contentBoxLeft?: number | null | undefined,
 }
 
 interface IProdData {
@@ -54,8 +55,18 @@ interface IProdState {
 
 interface IState {
   filters: IFilter[],
-  layout: ILayout,
+  layout?: IContentLayout,
   prodData: IProdData[],
 }
 
-export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilter, ILayout, IProdData, IState }
+export {
+  FilterTypes,
+  IRangeFilterOptions,
+  IChoiceFilterData,
+  IRangeFilterData,
+  IFilterLayout,
+  IFilter,
+  IContentLayout,
+  IProdData,
+  IState,
+}

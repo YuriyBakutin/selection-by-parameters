@@ -7,7 +7,7 @@ export default (filter: IFilter) => {
     const data = filter.data as IChoiceFilterData
 
     const allUnchecked = !data.variants.reduce(
-      (a, variant) => a = a || variant.checked, false,
+      (a, variant) => a = a || variant.checked, false
     )
 
     data.connectedVariants = []

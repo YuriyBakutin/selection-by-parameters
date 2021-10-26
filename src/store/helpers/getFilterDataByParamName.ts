@@ -43,7 +43,7 @@ export default (Filter: IFilter, data: IProdData[]) => {
         currentMaxValueText: null as null | string,
         minHandlePercent: null as null | number,
         maxHandlePercent: null as null | number,
-      },
+      }
     )
   }
 }

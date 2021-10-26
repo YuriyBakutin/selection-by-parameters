@@ -4,12 +4,14 @@ import {
   IChoiceFilterData,
   IRangeFilterData,
   IFilter,
-  ILayout,
   IProdData,
   IState,
 } from './types'
 
 const getters = {
+  getContentLayout: (state: IState) => {
+    return state.layout
+  },
   getFilteredProdData: (state: IState) => {
     return state.prodData.filter((prodDataItem) => {
       const filters = state.filters
@@ -49,23 +51,23 @@ const getters = {
       return true
     })
   },
-  getFilterParamByName: (state: IState) => (filterName: string) => {
+  getFilterByName: (state: IState) => (filterName: string) => {
     return state.filters.find((param) => param.name === filterName)
   },
   getFilterDataByName: (state: IState, getters: any) => (filterName: string) => {
-    return getters.getFilterParamByName(filterName).data
+    return getters.getFilterByName(filterName).data
   },
   getFilterVariantChecked: (state: IState, getters: any) => (
     filterName: string,
-    variantName: string,
+    variantName: string
   ) => {
-    const params = getters.getFilterParamByName(filterName)
+    const params = getters.getFilterByName(filterName)
     if (!params) {
       return false
     }
 
     return !!(params.data as IChoiceFilterData)?.variants.find(
-      (variant) => variant.variantName === variantName,
+      (variant) => variant.variantName === variantName
     )?.checked
   },
 }

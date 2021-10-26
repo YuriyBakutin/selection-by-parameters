@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import { IFilter } from '@/store/types'
 import getFilterWidgetByType from '@/helpers/getFilterWidgetByType'
-import FilterGap from '@/components/FilterGap.vue'
+
+const store = useStore()
 
 const props = defineProps<{
-  filterParams: IFilter,
+  filterName: string,
 }>()
 
-const widget = getFilterWidgetByType(props.filterParams.type)
+const filter = store.getters.getFilterByName(props.filterName) // markRaw( props.filter )
 
-const filterParams = markRaw( props.filterParams )
+const widget = getFilterWidgetByType(filter.type)
+
 </script>
 <template>
   <div
@@ -17,11 +19,11 @@ const filterParams = markRaw( props.filterParams )
     class="py0">
     <h3
       style="margin-bottom: 8px;"
-      class="h2 bold mt0">{{filterParams?.title}}</h3>
+      class="h2 bold mt0">{{filter?.title}}</h3>
     <component
       :is="widget"
-      :filterName="filterParams.name"
-      :filterOptions="filterParams.options"
-      :filterData="filterParams.data" />
+      :filterName="filter.name"
+      :filterOptions="filter.options"
+      :filterData="filter.data" />
   </div>
 </template>

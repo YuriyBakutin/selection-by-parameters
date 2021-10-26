@@ -292,6 +292,21 @@ onMounted(() => {
   const boxElem = box.value as HTMLElement
   boxElem.addEventListener('resize', setXSizes)
   setXSizes()
+
+  ;(currentMinValueInput.value as HTMLElement).onwheel = (event) => {
+    const step = -inputStep * Math.sign(event.deltaY)
+    const vt = +currentMinValueText.value
+    currentMinValueText.value = (vt + step).toFixed(precision)
+
+    validateMin()
+  }
+  ;(currentMaxValueInput.value as HTMLElement).onwheel = (event) => {
+    const step = -inputStep * Math.sign(event.deltaY)
+    const vt = +currentMaxValueText.value
+    currentMaxValueText.value = (vt + step).toFixed(precision)
+
+    validateMax()
+  }
 })
 </script>
 <template>
@@ -307,7 +322,7 @@ onMounted(() => {
         @click="selectInput"
         @keydown.up="validateMin"
         @keydown.down="validateMin"
-         @keyup.enter="validateMin"
+        @keyup.enter="validateMin"
         @keyup.esc="minInputEscape"
         @change="validateMin" />
       <div

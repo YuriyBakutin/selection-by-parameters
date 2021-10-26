@@ -41,7 +41,7 @@ const percentXRatio = computed(() => (
   100 / (lengthX.value - 4 * handleRadius)
 ))
 
-const ratio = computed(() => (
+const xValueToData = computed(() => (
   (maxValue.value - minValue.value) / (lengthX.value - 4 * handleRadius)
 ))
 
@@ -188,14 +188,16 @@ const currentMinHandleMove = (event: MouseEvent) => {
       currentMaxX.value - handleCenterMinDistance
     )
 
-    currentMinValue.value = minValue.value + (currentMinX.value - minX) * ratio.value
+    currentMinValue.value = minValue.value + (currentMinX.value - minX) * xValueToData.value
   } else if (movingHandleName === 'currentMaxHandle') {
     currentMaxX.value = Math.max(
       Math.min(event.x - shiftX + oldHandleX, maxX.value),
       currentMinX.value + handleCenterMinDistance
     )
 
-    currentMaxValue.value = maxValue.value - (maxX.value - currentMaxX.value) * ratio.value
+    currentMaxValue.value = maxValue.value - (
+      maxX.value - currentMaxX.value
+    ) * xValueToData.value
   }
 }
 
@@ -203,18 +205,19 @@ const currentMinHandleDrop = (event: MouseEvent) => {
   window.removeEventListener('mousemove', currentMinHandleMove)
   window.removeEventListener('mouseup', currentMinHandleDrop)
   moving = false
-    // if (!moving) {
-    //   currentMinX.value = ((v - minValue.value) / ratio.value) + minX
-    // }currentMaxValueText
   currentMinHandleMove(event)
 
   currentMinX.value = ((
     +currentMinValueText.value / dataToTextMultiplier - minValue.value
-  ) / ratio.value) + minX
+  ) / xValueToData.value) + minX
+
+  currentMinValue.value = +currentMinValueText.value / dataToTextMultiplier
 
   currentMaxX.value = maxX.value - ((
     maxValue.value - +currentMaxValueText.value / dataToTextMultiplier
-  ) / ratio.value)
+  ) / xValueToData.value)
+
+  currentMaxValue.value = +currentMaxValueText.value / dataToTextMultiplier
 }
 
 const selectInput = (event: MouseEvent) => {
@@ -244,7 +247,10 @@ const validateMin = () => {
 
   currentMinValue.value = vt / dataToTextMultiplier
   currentMinValueText.value = vt.toFixed(precision)
-  minHandlePercent.value = (vt / dataToTextMultiplier - minValue.value) * dataToHandlerPercent.value
+
+  minHandlePercent.value = (
+    vt / dataToTextMultiplier - minValue.value
+  ) * dataToHandlerPercent.value
 }
 
 const maxInputEscape = () => {
@@ -270,7 +276,10 @@ const validateMax = () => {
 
   currentMaxValue.value = vt / dataToTextMultiplier
   currentMaxValueText.value = vt.toFixed(precision)
-  maxHandlePercent.value = (vt / dataToTextMultiplier - minValue.value) * dataToHandlerPercent.value
+
+  maxHandlePercent.value = (
+    vt / dataToTextMultiplier - minValue.value
+  ) * dataToHandlerPercent.value
 }
 
 const setXSizes = () => {

@@ -9,6 +9,9 @@ const props = defineProps<{
   price: number,
 }>()
 
+const detailButton = ref(null as HTMLButtonElement | null)
+const article = ref(null as HTMLElement | null)
+
 const formatter = new Intl.NumberFormat('ru-RU')
 
 const endingOfTheRussianWordRoom = computed(
@@ -22,9 +25,35 @@ const costPerMeterText = computed(() => (
 const detail = () => {
   console.log('detail')
 }
+
+let detailButtonFocused = false
+
+const onDetailButtonFocus = () => {
+  if (detailButtonFocused) {
+    return
+  }
+
+  detailButton.value?.blur()
+  setTimeout(() => detailButton.value?.focus(), 200)
+  article.value?.scrollIntoView(true)
+  article.value?.classList.add('prod-card-hover')
+  detailButtonFocused = true
+
+}
+
+const onDetailButtonBlur = () => {
+  if (!detailButtonFocused) {
+    return
+  }
+
+  article.value?.classList.remove('prod-card-hover')
+  article.value?.scrollIntoView(true)
+  detailButtonFocused = false
+}
 </script>
 <template>
   <article
+    ref="article"
     style="overflow: hidden"
     class="prod-card p3">
     <div class="fit flex justify-between mb3 mt1">
@@ -39,7 +68,10 @@ const detail = () => {
     </div>
     <div class="price">{{formatter.format(price)}}р.</div>
     <div class="cost-per-meter dim">{{costPerMeterText}} р. за м²</div>
-    <button @click="detail"
+    <button ref="detailButton"
+      @click="detail"
+      @focus="onDetailButtonFocus"
+      @blur="onDetailButtonBlur"
       tabindex="0"
       class="control-frame checked h1 bold pointer detail">Подробнее</button>
   </article>
@@ -54,13 +86,17 @@ const detail = () => {
   margin: 0 10px 30px 10px;
   overflow: hidden;
   transition: box-shadow .2s ease-in-out;
+  scroll-behavior: smooth;
 }
 .prod-card:hover {
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
 }
-.prod-card:focus-within {
+.prod-card-hover {
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
 }
+/* .prod-card:focus-within {
+  box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
+} */
 .dim {
   opacity: 0.5;
 }
@@ -75,9 +111,12 @@ const detail = () => {
 .prod-card:hover .image-block {
   height: 200px;
 }
-.prod-card:focus-within .image-block {
+.prod-card-hover .image-block {
   height: 200px;
 }
+/* .prod-card:focus-within .image-block {
+  height: 200px;
+} */
 .number {
   position: absolute;
   line-height: 30px;
@@ -102,10 +141,13 @@ const detail = () => {
   background-position: center center;
   transition: transform .2s ease-in-out;
 }
-.prod-card:focus-within .plan {
+/* .prod-card:focus-within .plan {
+  transform: translate3d(0px, -22px, 0px) scale(0.8);
+} */
+.prod-card:hover .plan {
   transform: translate3d(0px, -22px, 0px) scale(0.8);
 }
-.prod-card:hover .plan {
+.prod-card-hover .plan {
   transform: translate3d(0px, -22px, 0px) scale(0.8);
 }
 .price {

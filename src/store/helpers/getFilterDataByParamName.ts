@@ -1,6 +1,6 @@
-import { IProdData, FilterTypes, IFilterParams, } from '@/store/types'
+import { IProdData, FilterTypes, IFilter, } from '@/store/types'
 
-export default (Filter: IFilterParams, data: IProdData[]) => {
+export default (Filter: IFilter, data: IProdData[]) => {
   const paramName = Filter.name
   const type = Filter.type
 

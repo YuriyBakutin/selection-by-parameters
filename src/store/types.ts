@@ -26,7 +26,7 @@ interface IRangeFilterOptions {
   multiplier?: null | number,
 }
 
-interface IFilterParams {
+interface IFilter {
   name: string,
   title: string,
   type: FilterTypes,
@@ -40,7 +40,7 @@ interface ILayout {
 }
 
 interface IFiltersState {
-  filters: IFilterParams[],
+  filters: IFilter[],
   layout: ILayout
 }
 
@@ -53,9 +53,9 @@ interface IProdState {
 }
 
 interface IState {
-  filters: IFilterParams[],
+  filters: IFilter[],
   layout: ILayout,
   prodData: IProdData[],
 }
 
-export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilterParams, ILayout, IProdData, IState, }
+export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilter, ILayout, IProdData, IState, }

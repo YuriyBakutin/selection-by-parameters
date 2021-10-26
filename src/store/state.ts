@@ -3,7 +3,7 @@ import {
   // IRangeFilterOptions,
   // IChoiceFilterData,
   // IRangeFilterData,
-  IFilterParams,
+  IFilter,
   ILayout,
   IProdData,
   // IState,
@@ -63,7 +63,7 @@ export default {
         multiplier: 0.000001,
       },
     },
-  ] as IFilterParams[],
+  ] as IFilter[],
   layout: {
     contentBoxRight: null,
     contentBoxLeft: null,

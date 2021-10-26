@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { IFilterParams, } from '@/store/types'
+import { IFilter, } from '@/store/types'
 import FilterControls from '@/components/FilterControls.vue'
 
 const store = useStore()
-const filters = computed(() => (store.state.filters) as IFilterParams[])
+const filters = computed(() => (store.state.filters) as IFilter[])
 </script>
 <template>
   <aside

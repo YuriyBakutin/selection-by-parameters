@@ -3,7 +3,7 @@ import {
   IRangeFilterOptions,
   IChoiceFilterData,
   IRangeFilterData,
-  IFilterParams,
+  IFilter,
   ILayout,
   IProdData,
   IState,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IFilter, } from '@/store/types'
+import { IFilter } from '@/store/types'
 import FilterControls from '@/components/FilterControls.vue'
 
 const store = useStore()

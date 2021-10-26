@@ -58,4 +58,4 @@ interface IState {
   prodData: IProdData[],
 }
 
-export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilter, ILayout, IProdData, IState, }
+export { FilterTypes, IRangeFilterOptions, IChoiceFilterData, IRangeFilterData, IFilter, ILayout, IProdData, IState }

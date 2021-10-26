@@ -1,4 +1,4 @@
-import { IProdData, FilterTypes, IFilter, } from '@/store/types'
+import { IProdData, FilterTypes, IFilter } from '@/store/types'
 
 export default (Filter: IFilter, data: IProdData[]) => {
   const paramName = Filter.name
@@ -8,7 +8,7 @@ export default (Filter: IFilter, data: IProdData[]) => {
     return {
       variants: [
         ...data.reduce((a, dataItem) => a.add(dataItem[paramName]), new Set),
-      ].map((variantName) => ({ variantName, checked: false, })),
+      ].map((variantName) => ({ variantName, checked: false })),
     }
   }
   if (type === FilterTypes.range) {
@@ -43,7 +43,7 @@ export default (Filter: IFilter, data: IProdData[]) => {
         currentMaxValueText: null as null | string,
         minHandlePercent: null as null | number,
         maxHandlePercent: null as null | number,
-      }
+      },
     )
   }
 }

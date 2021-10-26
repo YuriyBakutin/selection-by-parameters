@@ -1,4 +1,4 @@
-import { FilterTypes, IFilter, IRangeFilterData, IChoiceFilterData, } from '@/store/types'
+import { FilterTypes, IFilter, IRangeFilterData, IChoiceFilterData } from '@/store/types'
 
 export default (filter: IFilter) => {
   const type = filter.type
@@ -7,7 +7,7 @@ export default (filter: IFilter) => {
     const data = filter.data as IChoiceFilterData
 
     const allUnchecked = !data.variants.reduce(
-      (a, variant) => a = a || variant.checked, false
+      (a, variant) => a = a || variant.checked, false,
     )
 
     data.connectedVariants = []

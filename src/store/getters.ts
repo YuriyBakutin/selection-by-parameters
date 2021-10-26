@@ -57,7 +57,7 @@ const getters = {
   },
   getFilterVariantChecked: (state: IState, getters: any) => (
     filterName: string,
-    variantName: string
+    variantName: string,
   ) => {
     const params = getters.getFilterParamByName(filterName)
     if (!params) {
@@ -65,7 +65,7 @@ const getters = {
     }
 
     return !!(params.data as IChoiceFilterData)?.variants.find(
-      (variant) => variant.variantName === variantName
+      (variant) => variant.variantName === variantName,
     )?.checked
   },
 }

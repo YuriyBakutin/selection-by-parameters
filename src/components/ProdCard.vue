@@ -83,7 +83,7 @@ const onDetailButtonBlur = () => {
   background: #fff;
   box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
   border-radius: 10px;
-  margin: 0 10px 30px 10px;
+  margin: 0 15px 30px 15px;
   overflow: hidden;
   transition: box-shadow .2s ease-in-out;
   scroll-behavior: smooth;
@@ -154,7 +154,7 @@ const onDetailButtonBlur = () => {
   font-weight: bold;
   font-size: 20px;
   line-height: 28px;
-  margin-top: 10px;
+  margin-top: 11px;
   margin-right: 5px;
   text-align: right;
 }

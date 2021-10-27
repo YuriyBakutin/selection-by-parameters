@@ -8,7 +8,7 @@
 .prod-card-empty {
   width: 250px;
   height: 345px;
-  margin: 0 10px 30px 10px;
+  margin: 0 15px 30px 15px;
   overflow: hidden;
 }
 </style>

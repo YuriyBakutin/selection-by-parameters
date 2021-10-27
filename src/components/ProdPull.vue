@@ -18,7 +18,7 @@ const detail = () => {
 </script>
 <template>
   <nav
-    style="overflow-y: auto; padding: 0 14px 0 22px;"
+    style="overflow-y: auto; padding: 0 0px 0 8px;"
     class="fit flex flex-wrap justify-between">
     <ProdCard
       v-for="prodDataItem in filteredProdData"

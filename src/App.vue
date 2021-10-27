@@ -44,7 +44,7 @@ body {
   background-color: #fff;
   border-radius: 10px;
   position: absolute;
-  width: 1336px;
+  width: 1376px;
   top: 80px;
   right: 0;
   bottom: 80px;

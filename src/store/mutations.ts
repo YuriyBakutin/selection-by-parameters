@@ -43,7 +43,7 @@ export default {
     filterName,
     value,
   }: {
-    target: 'currentMaxValue' | 'currentMinValue' | 'currentMaxValueText' | 'currentMinValueText',
+    target: 'currentMaxValue' | 'currentMinValue' | 'currentMaxText' | 'currentMinText',
     filterName: string,
     value: number,
   }) {

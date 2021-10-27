@@ -21,14 +21,14 @@ export default (Filter: IFilter, data: IProdData[]) => {
         if (!a.minValue || a.minValue > value) {
           a.minValue = value
           a.currentMinValue = value
-          a.currentMinValueText = (value * multiplier).toFixed(precision)
+          a.currentMinText = (value * multiplier).toFixed(precision)
           a.minHandlePercent = 0
         }
 
         if (!a.maxValue || a.maxValue < value) {
           a.maxValue = value
           a.currentMaxValue = value
-          a.currentMaxValueText = (value * multiplier).toFixed(precision)
+          a.currentMaxText = (value * multiplier).toFixed(precision)
           a.maxHandlePercent = 100
         }
 
@@ -39,8 +39,8 @@ export default (Filter: IFilter, data: IProdData[]) => {
         maxValue: null as null | number,
         currentMinValue: null as null | number,
         currentMaxValue: null as null | number,
-        currentMinValueText: null as null | string,
-        currentMaxValueText: null as null | string,
+        currentMinText: null as null | string,
+        currentMaxText: null as null | string,
         minHandlePercent: null as null | number,
         maxHandlePercent: null as null | number,
       }

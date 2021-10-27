@@ -13,8 +13,8 @@ interface IRangeFilterData {
   maxValue: null | number,
   currentMinValue: null | number,
   currentMaxValue: null | number,
-  currentMinValueText?: null | number,
-  currentMaxValueText?: null | number,
+  currentMinText?: null | number,
+  currentMaxText?: null | number,
   minHandlePercent?: null | number, // 0..100
   maxHandlePercent?: null | number, // 0..100
   connectedMinValue?: null | number,

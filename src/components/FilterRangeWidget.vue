@@ -55,7 +55,7 @@ const currentMinValue = computed({
     return v
   },
   set(v: number) {
-    currentMinValueText.value = (v * dataToTextMultiplier).toFixed(precision)
+    currentMinText.value = (v * dataToTextMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMinValue',
@@ -65,14 +65,14 @@ const currentMinValue = computed({
   },
 })
 
-const currentMinValueText = computed({
+const currentMinText = computed({
   get() {
     return (store.getters.getFilterDataByName(props.filterName)
-    ).currentMinValueText
+    ).currentMinText
   },
   set(vs: string) {
     store.commit('setCurrentValue', {
-      target: 'currentMinValueText',
+      target: 'currentMinText',
       filterName: props.filterName,
       value: vs,
     })
@@ -114,7 +114,7 @@ const currentMaxValue = computed({
     return v
   },
   set(v: number) {
-    currentMaxValueText.value = (v * dataToTextMultiplier).toFixed(precision)
+    currentMaxText.value = (v * dataToTextMultiplier).toFixed(precision)
 
     store.commit('setCurrentValue', {
       target: 'currentMaxValue',
@@ -124,14 +124,14 @@ const currentMaxValue = computed({
   },
 })
 
-const currentMaxValueText = computed({
+const currentMaxText = computed({
   get() {
     return (store.getters.getFilterDataByName(props.filterName)
-    ).currentMaxValueText
+    ).currentMaxText
   },
   set(vs: string) {
     store.commit('setCurrentValue', {
-      target: 'currentMaxValueText',
+      target: 'currentMaxText',
       filterName: props.filterName,
       value: vs,
     })
@@ -208,16 +208,16 @@ const currentMinHandleDrop = (event: MouseEvent) => {
   currentMinHandleMove(event)
 
   currentMinX.value = ((
-    +currentMinValueText.value / dataToTextMultiplier - minValue.value
+    +currentMinText.value / dataToTextMultiplier - minValue.value
   ) / xValueToData.value) + minX
 
-  currentMinValue.value = +currentMinValueText.value / dataToTextMultiplier
+  currentMinValue.value = +currentMinText.value / dataToTextMultiplier
 
   currentMaxX.value = maxX.value - ((
-    maxValue.value - +currentMaxValueText.value / dataToTextMultiplier
+    maxValue.value - +currentMaxText.value / dataToTextMultiplier
   ) / xValueToData.value)
 
-  currentMaxValue.value = +currentMaxValueText.value / dataToTextMultiplier
+  currentMaxValue.value = +currentMaxText.value / dataToTextMultiplier
 }
 
 const selectInput = (event: MouseEvent) => {
@@ -225,17 +225,17 @@ const selectInput = (event: MouseEvent) => {
 }
 
 const minInputEscape = () => {
-  currentMinValueText.value = (currentMinValue.value * dataToTextMultiplier).toFixed(precision)
+  currentMinText.value = (currentMinValue.value * dataToTextMultiplier).toFixed(precision)
 }
 
-const validateMin = () => {
-  if (isNaN(currentMinValueText.value as any)) {
+const currentMinTextInputHandler = () => {
+  if (isNaN(currentMinText.value as any)) {
     minInputEscape()
 
     return
   }
 
-  let vt: number = +currentMinValueText.value
+  let vt: number = +currentMinText.value
 
   if (vt > currentMaxValue.value * dataToTextMultiplier) {
     vt = currentMaxValue.value * dataToTextMultiplier
@@ -246,7 +246,7 @@ const validateMin = () => {
   }
 
   currentMinValue.value = vt / dataToTextMultiplier
-  currentMinValueText.value = vt.toFixed(precision)
+  currentMinText.value = vt.toFixed(precision)
 
   minHandlePercent.value = (
     vt / dataToTextMultiplier - minValue.value
@@ -254,17 +254,17 @@ const validateMin = () => {
 }
 
 const maxInputEscape = () => {
-  currentMaxValueText.value = (currentMaxValue.value * dataToTextMultiplier).toFixed(precision)
+  currentMaxText.value = (currentMaxValue.value * dataToTextMultiplier).toFixed(precision)
 }
 
-const validateMax = () => {
-  if (isNaN(currentMaxValueText.value as any)) {
+const currentMaxTextInputHandler = () => {
+  if (isNaN(currentMaxText.value as any)) {
     maxInputEscape()
 
     return
   }
 
-  let vt: number = +currentMaxValueText.value
+  let vt: number = +currentMaxText.value
 
   if (vt < currentMinValue.value * dataToTextMultiplier) {
     vt = currentMinValue.value * dataToTextMultiplier
@@ -275,7 +275,7 @@ const validateMax = () => {
   }
 
   currentMaxValue.value = vt / dataToTextMultiplier
-  currentMaxValueText.value = vt.toFixed(precision)
+  currentMaxText.value = vt.toFixed(precision)
 
   maxHandlePercent.value = (
     vt / dataToTextMultiplier - minValue.value
@@ -298,17 +298,17 @@ onMounted(() => {
 
   ;(currentMinValueInput.value as HTMLElement).onwheel = (event) => {
     const step = -inputStep * Math.sign(event.deltaY)
-    const vt = +currentMinValueText.value
-    currentMinValueText.value = (vt + step).toFixed(precision)
+    const vt = +currentMinText.value
+    currentMinText.value = (vt + step).toFixed(precision)
 
-    validateMin()
+    currentMinTextInputHandler()
   }
   ;(currentMaxValueInput.value as HTMLElement).onwheel = (event) => {
     const step = -inputStep * Math.sign(event.deltaY)
-    const vt = +currentMaxValueText.value
-    currentMaxValueText.value = (vt + step).toFixed(precision)
+    const vt = +currentMaxText.value
+    currentMaxText.value = (vt + step).toFixed(precision)
 
-    validateMax()
+    currentMaxTextInputHandler()
   }
 })
 </script>
@@ -320,14 +320,14 @@ onMounted(() => {
         ref="currentMinValueInput"
         class="control-frame range-input h0"
         style="text-align: center; line-height: 40px;"
-        v-model="currentMinValueText"
+        v-model="currentMinText"
         :step="inputStep"
         @click="selectInput"
-        @keydown.up="validateMin"
-        @keydown.down="validateMin"
-        @keyup.enter="validateMin"
+        @keydown.up="currentMinTextInputHandler"
+        @keydown.down="currentMinTextInputHandler"
+        @keyup.enter="currentMinTextInputHandler"
         @keyup.esc="minInputEscape"
-        @change="validateMin" />
+        @change="currentMinTextInputHandler" />
       <div
         class="px0 h3 bold mx1 table-cell p0"
         style="height: 40px; line-height: 40px; color: #2c323a; opacity: 0.5;">-</div>
@@ -337,14 +337,14 @@ onMounted(() => {
         ref="currentMaxValueInput"
         class="control-frame range-input h0"
         style="text-align: center; line-height: 40px;"
-        v-model="currentMaxValueText"
+        v-model="currentMaxText"
         :step="inputStep"
         @click="selectInput"
-        @keydown.up="validateMax"
-        @keydown.down="validateMax"
-        @keyup.enter="validateMax"
+        @keydown.up="currentMaxTextInputHandler"
+        @keydown.down="currentMaxTextInputHandler"
+        @keyup.enter="currentMaxTextInputHandler"
         @keyup.esc="maxInputEscape"
-        @change="validateMax" />
+        @change="currentMaxTextInputHandler" />
     </div>
     <svg class="bock mt1" xmlns="http://www.w3.org/2000/svg"
       width="175" height="24" viewBox="0 0 175 24">

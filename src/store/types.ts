@@ -40,9 +40,10 @@ interface IFilter {
 }
 
 interface IContentLayout {
-  contentBoxWidth: number | null | undefined,
-  contentBoxRight?: number | null | undefined,
-  contentBoxLeft?: number | null | undefined,
+  // contentBoxWidth?: number | null | undefined,
+  // contentBoxRight?: number | null | undefined,
+  // contentBoxLeft?: number | null | undefined,
+  contentBoxRect: DOMRect | null | undefined,
 }
 
 interface IProdData {

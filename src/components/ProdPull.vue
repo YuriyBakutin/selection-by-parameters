@@ -2,6 +2,9 @@
 const store = useStore()
 const filteredProdData = computed(() => store.getters.getFilteredProdData)
 
+const prodPull = ref(null as HTMLElement | null)
+const hasYScroll = ref(false)
+
 const prodCardsPerRow = 4
 
 const prodCardEmptyArray = computed(() => {
@@ -15,11 +18,39 @@ const prodCardEmptyArray = computed(() => {
 const detail = () => {
   console.log('detail')
 }
+
+const setHasYScroll = () => {
+  nextTick(() => {
+    if (!prodPull.value) {
+      hasYScroll.value = false
+
+      return
+    }
+
+    hasYScroll.value = prodPull.value.scrollHeight > prodPull.value.clientHeight
+  })
+}
+
+watch(filteredProdData, () => {
+  setHasYScroll()
+})
+
+onMounted(() => {
+  window.addEventListener('resize', setHasYScroll)
+  setHasYScroll()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', setHasYScroll)
+})
+
 </script>
 <template>
   <nav
-    style="overflow-y: auto; padding: 0 0px 0 8px;"
-    class="fit flex flex-wrap justify-between">
+    ref="prodPull"
+    style="overflow-y: auto; padding: 0 0 0 12px;"
+    :style="{paddingRight: hasYScroll ? '0' : '12px'}"
+    class="fit flex flex-wrap">
     <ProdCard
       v-for="prodDataItem in filteredProdData"
       :key="'prodDataItem' + prodDataItem.building_id + prodDataItem.id"

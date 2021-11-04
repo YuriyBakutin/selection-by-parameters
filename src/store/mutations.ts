@@ -26,11 +26,6 @@ export default {
       filter.layout = layout
     }
   },
-  setContentLayout(state: IState, contentElem: HTMLElement) {
-    const rect = contentElem.getBoundingClientRect()
-    const contentBoxWidth = rect.width
-    state.layout = { contentBoxWidth }
-  },
   connectFilters(state: IState) {
     for (const filter of state.filters) {
       connectFilter(

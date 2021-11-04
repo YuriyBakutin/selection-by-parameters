@@ -8,16 +8,6 @@ store.commit('updateProdData', getProdData())
 store.commit('initFilters')
 
 const content = ref(null as HTMLElement | null)
-
-const setContentLayout = () => {
-  const contentElem = content.value as HTMLElement
-  store.commit('setContentLayout', contentElem)
-}
-
-onMounted(() => {
-  window.addEventListener('resize', setContentLayout)
-  setContentLayout()
-})
 </script>
 <template>
   <div class="frame">
@@ -66,8 +56,8 @@ body {
   padding: 36px 20px 30px 20px;
 }
 .content {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 @media (min-width: 856px) {
   .frame {

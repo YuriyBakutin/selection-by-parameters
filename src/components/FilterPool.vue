@@ -9,7 +9,7 @@ let layoutIsReady = ref(false)
 </script>
 <template>
   <aside
-    style="margin-bottom: 49px; padding: 0 18px;"
+    style="margin-bottom: 49px; padding: 0 27px;"
     class="flex flex-wrap justify-between items-center">
     <template :key="'FilterWithGap.' + filterName" v-for="filterName in filterNames">
       <Filter :filterName="filterName" />
